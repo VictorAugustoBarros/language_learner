@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  language_learner_db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root_docker"
+      MYSQL_DATABASE: "language_learner"
+    ports:
+      - "3308:3306"
+    volumes:
+      - /app/connections/mysql/mysql:/var/lib/mysql
+

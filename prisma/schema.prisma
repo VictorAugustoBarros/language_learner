@@ -1,0 +1,33 @@
+generator client {
+  provider  = "prisma-client-py"
+  interface = "asyncio"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:root_docker@localhost:3308/language_learner"
+}
+
+model JapaneseWords {
+  id_japanese_word         Int                      @id @default(autoincrement())
+  japanese_word_romaji     String                   @unique
+  japanese_word_kanji      String                   @unique
+  created_at               DateTime                 @default(now())
+  japanese_portuguese_word JapanesePortugueseWords?
+}
+
+model PortugueseWords {
+  id_portuguese_word       Int                      @id @default(autoincrement())
+  portuguese_word          String                   @unique
+  created_at               DateTime                 @default(now())
+  japanese_portuguese_word JapanesePortugueseWords?
+}
+
+model JapanesePortugueseWords {
+  id_japanese_portuguese_word Int             @id @default(autoincrement())
+  id_portuguese_word          Int             @unique
+  id_japanese_word            Int             @unique
+  created_at                  DateTime        @default(now())
+  japanese_word               JapaneseWords   @relation(fields: [id_japanese_word], references: [id_japanese_word])
+  portuguese_word             PortugueseWords @relation(fields: [id_portuguese_word], references: [id_portuguese_word])
+}

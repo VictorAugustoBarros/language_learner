@@ -1,0 +1,5 @@
+python-dotenv
+prisma
+click
+sounddevice
+vosk
