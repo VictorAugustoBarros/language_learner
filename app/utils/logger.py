@@ -23,14 +23,21 @@ class Logger:
             self.logger.setLevel(log_level)
 
     def get_log_level(self, log_level: str):
-        if log_level == "DEBUG":
+        """Busca do log level a partir de uma string.
+
+        Args:
+            log_level (str): Log Level
+        """
+        if log_level.upper() == "DEBUG":
             return logging.DEBUG
 
-        elif log_level == "INFO":
+        elif log_level.upper() == "INFO":
             return logging.INFO
 
-        elif log_level == "ERROR":
+        elif log_level.upper() == "ERROR":
             return logging.ERROR
+
+        return None
 
     def info(self, message, **kwargs):
         """Log message in Debug level.
@@ -81,11 +88,11 @@ class Logger:
         """
         self.logger.critical(message, **kwargs)
 
-    def debug(self, message, **kwargs):
+    def debug(self, message: dict, **kwargs):
         """Logger para nivel ERROR.
 
         Args:
-            message ():
-            **kwargs ():
+            message (dict):
+            **kwargs (dict):
         """
-        self.logger.debug(message, **kwargs)
+        self.logger.debug(msg=message, **kwargs)

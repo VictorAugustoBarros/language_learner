@@ -1,3 +1,4 @@
+"""Voice Recognition."""
 import argparse
 import os
 import json
@@ -8,23 +9,31 @@ import sys
 
 
 class VoiceRecognition:
+    """Classe para Instancia do Reconhecimento de Voz."""
+
     def __init__(self):
+        """Construtor da classe."""
         self.q = queue.Queue()
 
     def int_or_str(self, text):
-        """Helper function for argument parsing."""
+        """Função para parseamento do argumento."""
         try:
             return int(text)
         except ValueError:
             return text
 
     def callback(self, indata, frames, time, status):
-        """This is called (from a separate thread) for each audio block."""
+        """Função de callback para cada audio bloqueado."""
         if status:
             print(status, file=sys.stderr)
         self.q.put(bytes(indata))
 
-    def run(self):
+    def run(self) -> str:
+        """Execução do processo para reconhecimento de voz.
+
+        Returns:
+            text: Palavra reconhecida
+        """
         parser = argparse.ArgumentParser(add_help=False)
         parser.add_argument(
             "-l", "--list-devices", action="store_true", help="show list of audio devices and exit"

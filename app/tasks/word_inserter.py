@@ -1,3 +1,4 @@
+"""Word Inserter."""
 from app.languages.portuguese import Portuguese
 from app.languages.japanese import Japanese
 from prisma import Prisma
@@ -6,13 +7,23 @@ from app.utils.logger import Logger
 
 
 class WordInserter:
+    """Classe para Inserçãod de novas palavras."""
+
     def __init__(self, language: str, word: str, complementar_word: str = None):
+        """Contrutor da classe.
+
+        Args:
+            language (str): Linguagem especificada
+            word (str): Palavra a ser cadastrada
+            complementar_word (str): Palavra complementar a ser cadastrada
+        """
         self.db = Prisma()
         self.word = word
         self.complementar_word = complementar_word
         self.language = language
 
     def create_insert(self):
+        """Busca das informações necessárias para inserção da palavra."""
         if self.language == "pt":
             return self.db.portuguesewords, Portuguese().get_data_to_insert(word=self.word)
 
@@ -24,6 +35,7 @@ class WordInserter:
         return None
 
     async def insert_word(self):
+        """Cadastro de uma nova palavra no banco de dados."""
         await self.db.connect()
         language, data = self.create_insert()
 
